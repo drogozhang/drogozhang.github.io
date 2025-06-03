@@ -1,8 +1,56 @@
 [
    {
+      "date": 2025,
+      "tag": "CVPR'25",
+      "spotlight": "",
+      "name": "CPath-Omni: A Unified Multimodal Foundation Model for Patch and Whole Slide Image Analysis in Computational Pathology",
+      "authors": "Yuxuan Sun, Yixuan Si, Chenglu Zhu, Xuan Gong, Kai Zhang, Pingyi Chen, Ye Zhang, Zhongyi Shui, Tao Lin, Lin Yang",
+      "paper_url": "https://arxiv.org/abs/2412.12077",
+      "project_url": "",
+      "code_url": "",
+      "data_url": "",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "NAACL'25",
+      "spotlight": "",
+      "name": "Revealing the Barriers of Language Agents in Planning",
+      "authors": "Jian Xie, Kexun Zhang, Jiangjie Chen, Siyu Yuan, Kai Zhang, Yikai\u200B Zhang, Lei Li, Yanghua Xiao",
+      "paper_url": "https://arxiv.org/abs/2410.12409",
+      "project_url": "",
+      "code_url": "https://github.com/hsaest/Agent-Planning-Analysis",
+      "data_url": "https://github.com/hsaest/Agent-Planning-Analysis/tree/main/data",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "ICLR'25",
+      "spotlight": "Oral (1.8%)",
+      "name": "PathGen-1.6M: 1.6 Million Pathology Image-text Pairs Generation through Multi-agent Collaboration",
+      "authors": "Yuxuan Sun, Yunlong Zhang, Yixuan Si, Chenglu Zhu, Zhongyi Shui, Kai Zhang, Jingxiong Li, Xingheng Lyu, Tao Lin, Lin Yang",
+      "paper_url": "https://arxiv.org/abs/2407.00203",
+      "project_url": "",
+      "code_url": "https://github.com/PathGen-1-6M/PathGen-1.6M",
+      "data_url": "https://github.com/PathGen-1-6M/PathGen-1.6M/tree/main/Data",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "ICLR'25",
+      "spotlight": "",
+      "name": "MuirBench: A Comprehensive Benchmark for Robust Multi-image Understanding",
+      "authors": "Fei Wang, Xingyu Fu, James Y. Huang, Zekun Li, Qin Liu, Xiaogeng Liu, Mingyu Derek Ma, Nan Xu, Wenxuan Zhou, Kai Zhang, Tianyi Lorena Yan, Wenjie Jacky Mo, Hsiang-Hui Liu, Pan Lu, Chunyuan Li, Chaowei Xiao, Kai-Wei Chang, Dan Roth, Sheng Zhang, Hoifung Poon, Muhao Chen",
+      "paper_url": "https://arxiv.org/abs/2406.09411",
+      "project_url": "https://muirbench.github.io",
+      "code_url": "https://github.com/muirbench/MuirBench",
+      "data_url": "https://huggingface.co/datasets/MUIRBENCH/MUIRBENCH",
+      "slides_url": ""
+   },
+   {
       "date": 2024,
       "tag": "ECCV'24",
-      "spotlight": "",
+      "spotlight": "Best Paper Finalist (0.2%)",
       "name": "PathMMU: A Massive Multimodal Expert-Level Benchmark for Understanding and Reasoning in Pathology",
       "authors": "Yuxuan Sun, Hao Wu, Chenglu Zhu, Sunyi Zheng, Qizi Chen, Kai Zhang, Yunlong Zhang, Dan Wan, Xiaoxiao Lan, Mengyue Zheng, Jingxiong Li, Xinheng Lyu, Tao Lin, Lin Yang",
       "paper_url": "https://arxiv.org/abs/2401.16355",
@@ -265,7 +313,7 @@
    },
    {
       "date": 2021,
-      "tag": "NAACL-HLT'21",
+      "tag": "NAACL'21",
       "spotlight": "",
       "name": "Open Hierarchical Relation Extraction",
       "authors": "Kai Zhang*, Yuan Yao*, Ruobing Xie, Xu Han, Zhiyuan Liu, Fen Lin, Leyu Lin, Maosong Sun",
@@ -277,7 +325,7 @@
    },
    {
       "date": 2019,
-      "tag": "NAACL-HLT'19",
+      "tag": "NAACL'19",
       "spotlight": "",
       "name": "TOI-CNN: A Solution of Information Extraction on Chinese Insurance Policy",
       "authors": "Lin Sun*, Kai Zhang*†, Fule Ji, Zhenhua Yang",

@@ -1,11 +1,21 @@
 [
    {
-      "date": "Jun 2024",
-      "content": "MagicLens Code and Model are released, play with it!",
+      "date": "Jan 2025",
+      "content": "PathGen-1.6M (Oral) and MuirBench were accepted to ICLR'25, and Agent Planning Analysis was accepted to NAACL'25.",
       "links": {
-         "MagicLens Code and Model": "https://github.com/google-deepmind/magiclens"
+         "PathGen-1.6M": "https://arxiv.org/abs/2407.00203",
+         "MuirBench": "https://arxiv.org/abs/2406.09411",
+         "Agent Planning Analysis": "https://arxiv.org/abs/2410.12409"
       },
-      "spotlights": []
+      "spotlights": ["(Oral)"]
+   },
+   {
+      "date": "Aug 2024",
+      "content": "PathMMU was accepted to ECCV'24 as Best Paper Finalist (0.2%).",
+      "links": {
+         "PathMMU": "https://pathmmu-benchmark.github.io/#/"
+      },
+      "spotlights": ["Best Paper Finalist", "(0.2%)"]
    },
    {
       "date": "May 2024",

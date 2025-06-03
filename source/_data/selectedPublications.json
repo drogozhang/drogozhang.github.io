@@ -1,5 +1,17 @@
 [
     {
+        "date": 2025,
+        "tag": "ArXiv'25",
+        "spotlight": "",
+        "name": "Is Your LLM Secretly a World Model of the Internet? Model-Based Planning for Web Agents",
+        "authors": "Yu Gu*, Kai Zhang*, Yuting Ning*, Boyuan Zheng*, Boyu Gou, Tianci Xue, Cheng Chang, Sanjari Srivastava, Yanan Xie, Peng Qi, Huan Sun, Yu Su",
+        "paper_url": "https://arxiv.org/abs/2411.06559",
+        "project_url": "",
+        "code_url": "https://github.com/OSU-NLP-Group/WebDreamer",
+        "data_url": "https://huggingface.co/collections/osunlp/webdreamer-67ee17325839c8a02339dbfb",
+        "slides_url": ""
+     },
+    {
         "date": 2024,
         "tag": "ICML'24",
         "spotlight": "Oral (1.5%)",
