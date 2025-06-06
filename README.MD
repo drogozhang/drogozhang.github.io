@@ -32,3 +32,8 @@ themes/cactus/source/files # for files upload (I guess)
 
 #### When upload files
 rm -rf .deploy_git/
+
+
+
+# Reference
+My lovely and smart wife [Gloria](https://beking0912.github.io/about/) made this website template for me and I don't even know how to fully use it (So I don't really know how to edit the website to give her some credits.).
