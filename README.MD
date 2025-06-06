@@ -25,8 +25,9 @@ $ hexo clean && hexo d -g
 
 ```
 themes/cactus/layout/archive.ejs
-themes/cactus/layout/index.ejs
-source/_data
+themes/cactus/layout/index.ejs # for intro
+source/_data # for pubs, invited talks, etc.
+themes/cactus/source/files # for files upload (I guess)
 ```
 
 #### When upload files
