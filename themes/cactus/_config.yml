@@ -26,15 +26,15 @@ nav:
 # You can optionally add a 'label' key to set the title attribute on the link. 
 # 'icon' value will be used as title when 'label' is missing.
 social_links:
-  -
-    icon: twitter
-    link: https://twitter.com/DrogoKhal4
-  -
-    icon: linkedin
-    link: https://www.linkedin.com/in/kai-zhang-43774b196
+  # -
+  #   icon: twitter
+  #   link: https://twitter.com/DrogoKhal4
   -
     icon: github
     link: https://github.com/drogozhang
+  -
+    icon: linkedin
+    link: https://www.linkedin.com/in/kai-zhang-43774b196
   -
     icon: graduation-cap
     link: https://scholar.google.com/citations?user=sDnAIsgAAAAJ&hl=en
