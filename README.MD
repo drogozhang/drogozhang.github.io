@@ -36,4 +36,4 @@ rm -rf .deploy_git/
 
 
 # Reference
-My lovely and smart wife [Gloria](https://beking0912.github.io/about/) made this website template for me and I don't even know how to fully use it (So I don't really know how to edit the website to give her some credits.).
+My lovely and smart wife [Gloria](https://beking0912.github.io/about/) made this website template. Please give her credits when u try to clone from mine.
