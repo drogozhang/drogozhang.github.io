@@ -1,11 +1,22 @@
 [
    {
+      "date": "Sept 2025",
+      "content": "WebDreamer was accepted to TMLR'25; ARM (Spotlight), Mind2Web 2, and CPathAgent were accepted to NeurIPS'25. I will serve as an Area Chair for ICLR'26.",
+      "links": {
+         "WebDreamer": "https://arxiv.org/abs/2411.06559",
+         "ARM": "https://team-arm.github.io/arm/",
+         "Mind2Web 2": "https://osu-nlp-group.github.io/Mind2Web-2/",
+         "CPathAgent": "https://arxiv.org/abs/2505.20510"
+      },
+      "spotlights": ["(Spotlight)"]
+   },
+   {
       "date": "Jan 2025",
-      "content": "PathGen-1.6M (Oral) and MuirBench were accepted to ICLR'25, and Agent Planning Analysis was accepted to NAACL'25.",
+      "content": "PathGen-1.6M (Oral) and MuirBench were accepted to ICLR'25, and Planning Analysis was accepted to NAACL'25.",
       "links": {
          "PathGen-1.6M": "https://arxiv.org/abs/2407.00203",
          "MuirBench": "https://arxiv.org/abs/2406.09411",
-         "Agent Planning Analysis": "https://arxiv.org/abs/2410.12409"
+         "Planning Analysis": "https://arxiv.org/abs/2410.12409"
       },
       "spotlights": ["(Oral)"]
    },
@@ -43,14 +54,6 @@
       "spotlights": ["Best Paper Finalist", "(0.2%)"]
    },
    {
-      "date": "Feb 2024",
-      "content": "Released TravelPlanner, a real-world benchmark for planning with language agents.",
-      "links": {
-         "TravelPlanner": "https://osu-nlp-group.github.io/TravelPlanner/"
-      },
-      "spotlights": []
-   },
-   {
       "date": "Jan 2024",
       "content": "Three papers got accpeted to ICLR'24: KnowledgeConflict (Spotlight), MUFFIN, and ImagenHub.",
       "links": {
@@ -59,12 +62,6 @@
          "ImagenHub": "https://arxiv.org/abs/2310.01596"
       },
       "spotlights": ["(Spotlight)"]
-   },
-   {
-      "date": "Oct 2023",
-      "content": "Attribution Evaluation was accepted to Findings of EMNLP'23.",
-      "links": {},
-      "spotlights": []
    },
    {
       "date": "Sept 2023",

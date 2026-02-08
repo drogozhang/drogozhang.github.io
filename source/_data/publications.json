@@ -1,6 +1,54 @@
 [
    {
       "date": 2025,
+      "tag": "TMLR'25",
+      "spotlight": "",
+      "name": "Is Your LLM Secretly a World Model of the Internet? Model-Based Planning for Web Agents",
+      "authors": "Yu Gu*, Kai Zhang*, Yuting Ning*, Boyuan Zheng*, Boyu Gou, Tianci Xue, Cheng Chang, Sanjari Srivastava, Yanan Xie, Peng Qi, Huan Sun, Yu Su",
+      "paper_url": "https://arxiv.org/abs/2411.06559",
+      "project_url": "",
+      "code_url": "https://github.com/OSU-NLP-Group/WebDreamer",
+      "data_url": "https://huggingface.co/datasets/osunlp/Dreamer-V1-Data",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "NeurIPS'25",
+      "spotlight": "Spotlight (3.2%)",
+      "name": "ARM: Adaptive Reasoning Model",
+      "authors": "Siye Wu, Jian Xie, Yikai\u200B Zhang, Aili Chen, Kai Zhang, Yu Su, Yanghua Xiao",
+      "paper_url": "https://arxiv.org/abs/2505.20258",
+      "project_url": "https://team-arm.github.io/arm/",
+      "code_url": "https://github.com/TEAM-ARM/ARM",
+      "data_url": "https://huggingface.co/collections/arm-team/arm-68302ffc0dd4f7f154cf3a23",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "NeurIPS'25",
+      "spotlight": "",
+      "name": "Mind2Web 2: Evaluating Agentic Search with Agent-as-a-Judge",
+      "authors": "Boyu Gou, Zanming Huang, Yuting Ning, Yu Gu, Michael Lin, Weijian Qi, Andrei Kopanev, Botao Yu, Bernal Jiménez Gutiérrez, Yiheng Shu, Chan Hee Song, Jiaman Wu, Shijie Chen, Hanane Nour Moussa, Tianshu Zhang, Jian Xie, Yifei Li, Tianci Xue, Zeyi Liao, Kai Zhang, Boyuan Zheng, Zhaowei Cai, Viktor Rozgic, Morteza Ziyadi, Huan Sun, Yu Su",
+      "paper_url": "https://arxiv.org/abs/2506.21506",
+      "project_url": "https://osu-nlp-group.github.io/Mind2Web-2/",
+      "code_url": "https://github.com/OSU-NLP-Group/Mind2Web-2",
+      "data_url": "https://huggingface.co/datasets/osunlp/Mind2Web-2",
+      "slides_url": ""
+   },
+   {
+      "date": 2025,
+      "tag": "NeurIPS'25",
+      "spotlight": "",
+      "name": "CPathAgent: An Agent-based Foundation Model for Interpretable High-Resolution Pathology Image Analysis Mimicking Pathologists' Diagnostic Logic",
+      "authors": "Yuxuan Sun, Yixuan Si, Chenglu Zhu, Kai Zhang, Zhongyi Shui, Bowen Ding, Tao Lin, Lin Yang",
+      "paper_url": "https://arxiv.org/abs/2505.20510",
+      "project_url": "",
+      "code_url": "",
+      "data_url": "",
+      "slides_url": ""
+   },   
+   {
+      "date": 2025,
       "tag": "CVPR'25",
       "spotlight": "",
       "name": "CPath-Omni: A Unified Multimodal Foundation Model for Patch and Whole Slide Image Analysis in Computational Pathology",
