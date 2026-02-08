@@ -102,6 +102,6 @@ theme: cactus
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/drogozhang/drogozhang.github.io
+  repo: git@github.com:drogozhang/drogozhang.github.io.git
   # example, https://github.com/hexojs/hexojs.github.io
   branch: gh-pages
