@@ -40,6 +40,7 @@ html
   border-top: 2px solid $color-text
   -webkit-text-size-adjust: 100%
   -ms-text-size-adjust: 100%
+  scrollbar-gutter: stable
 
 body
   margin: 0
@@ -101,9 +102,6 @@ body
   h6
     a:hover
       underline(6px, $color-link)
-
-  #clustrmaps-widget-v2
-    display: none;
 
 @media (min-width: 540px)
   .image-wrap
@@ -236,3 +234,11 @@ code
 
 #header-post #actions
   direction: ltr !important
+
+// Keep mapmyvisitors counting, but hide the visual widget
+.hidden-visitor-map
+  display: none !important
+#mapmyvisitors-widget
+  display: none !important
+#clstminf
+  display: none !important
