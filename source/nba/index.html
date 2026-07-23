@@ -302,6 +302,7 @@ const DIFFICULTY = {
 const AWARD_BONUS = {
   '全明星': 2, '最佳阵容一阵': 5, '最佳阵容二阵': 4, '最佳阵容三阵': 3,
   '常规赛MVP': 8, '最佳防守球员': 4, '最佳新秀': 3, '最佳第六人': 2, '总决赛MVP': 5,
+  '得分王': 5, '篮板王': 2, '助攻王': 2,
 };
 const CHAMPION_BONUS = 3;
 
@@ -540,6 +541,15 @@ function simulateSeason(player, settings) {
 
   if ((role === '替补' || role === '轮换') && impact > 78 && Math.random() < 0.3*am) awards.push('最佳第六人');
 
+  // 数据王（得分/篮板/助攻）：只看对应场均数据本身，跟 impact 无关；
+  // 首发+出场足够才有资格（对齐现实的出场数规则），数据越高越稳。
+  // 门槛按各自数据的模拟上限校准：得分封顶~36、篮板~16、助攻~12.5
+  if (role === '首发' && games >= 58) {
+    if (Math.random() < clamp((ppg - 26) / 9 * am, 0, 0.9)) awards.push('得分王');
+    if (Math.random() < clamp((rpg - 11) / 4 * am, 0, 0.9)) awards.push('篮板王');
+    if (Math.random() < clamp((apg - 8.5) / 3.5 * am, 0, 0.9)) awards.push('助攻王');
+  }
+
   // FMVP 按"这赛季有多支配"连续打分，而不是过门槛后固定 40% 抛硬币——
   // 不然一个 impact 300+ 的绝对核心夺冠，跟一个刚好摸到门槛的角色球员夺冠，中奖率是一样的
   if (champion) {
@@ -585,7 +595,8 @@ const CHAMP_ROLE_WEIGHT = { '首发': 1.0, '轮换': 0.6, '替补': 0.3 };
 
 function hofScoreBreakdown(awards, totals) {
   const individual = awards.mvp*15 + awards.dpoy*8 + awards.allnba1*6 + awards.allnba2*4 + awards.allnba3*2
-    + awards.allstar*3 + awards.finalsMvp*10 + (awards.roy?3:0) + awards.sixthman*2;
+    + awards.allstar*3 + awards.finalsMvp*10 + (awards.roy?3:0) + awards.sixthman*2
+    + (awards.scoringChamp||0)*4 + (awards.rebChamp||0)*2 + (awards.astChamp||0)*2;
   const team = (awards.champWeight || 0) * 4;
   const longevity = totals.pts/1200 + totals.ast/1000 + totals.reb/1200;
   return { individual: Math.round(individual), team: Math.round(team), longevity: Math.round(longevity), total: Math.round(individual + team + longevity) };
@@ -950,7 +961,7 @@ function confirmCreate() {
     name, pos: c.pos, attrs, potential,
     age: 19, seasonNum: 1, team: null, contractYearsLeft: 0,
     history: [], careerTotals: { gp:0, pts:0, reb:0, ast:0, stl:0, blk:0 },
-    awards: { mvp:0, dpoy:0, roy:false, allstar:0, allnba1:0, allnba2:0, allnba3:0, champion:0, champWeight:0, finalsMvp:0, sixthman:0 },
+    awards: { mvp:0, dpoy:0, roy:false, allstar:0, allnba1:0, allnba2:0, allnba3:0, champion:0, champWeight:0, finalsMvp:0, sixthman:0, scoringChamp:0, rebChamp:0, astChamp:0 },
     milestonesReached: [],
     traits: card.traits.slice(),
     traitBonus,
@@ -1136,7 +1147,9 @@ function renderHub() {
           <div class="divider small muted">
             <div>全明星 x${p.awards.allstar}　MVP x${p.awards.mvp}</div>
             <div>总冠军 x${p.awards.champion}　FMVP x${p.awards.finalsMvp}</div>
-            <div>DPOY x${p.awards.dpoy}　最佳新秀 ${p.awards.roy?'是':'否'}</div>
+            <div>DPOY x${p.awards.dpoy}　得分王 x${p.awards.scoringChamp||0}</div>
+            <div>篮板王 x${p.awards.rebChamp||0}　助攻王 x${p.awards.astChamp||0}</div>
+            <div>最佳新秀 ${p.awards.roy?'是':'否'}</div>
           </div>
         </div>
         <div class="card" style="display:flex; flex-direction:column;">
@@ -1209,6 +1222,9 @@ function confirmOffseason() {
   if (result.awards.includes('最佳防守球员')) awards.dpoy++;
   if (result.awards.includes('最佳新秀')) awards.roy = true;
   if (result.awards.includes('最佳第六人')) awards.sixthman++;
+  if (result.awards.includes('得分王')) awards.scoringChamp = (awards.scoringChamp||0) + 1;
+  if (result.awards.includes('篮板王')) awards.rebChamp = (awards.rebChamp||0) + 1;
+  if (result.awards.includes('助攻王')) awards.astChamp = (awards.astChamp||0) + 1;
   if (result.awards.includes('最佳阵容一阵')) awards.allnba1++;
   if (result.awards.includes('最佳阵容二阵')) awards.allnba2++;
   if (result.awards.includes('最佳阵容三阵')) awards.allnba3++;
@@ -1380,6 +1396,7 @@ function renderRetired() {
           <div>全明星：${p.awards.allstar} 次</div>
           <div>常规赛MVP：${p.awards.mvp} 次</div>
           <div>最佳防守球员：${p.awards.dpoy} 次</div>
+          <div>得分王：${p.awards.scoringChamp||0} 次　篮板王：${p.awards.rebChamp||0} 次　助攻王：${p.awards.astChamp||0} 次</div>
           <div>总决赛MVP：${p.awards.finalsMvp} 次</div>
           <div>最佳阵容一/二/三阵：${p.awards.allnba1}/${p.awards.allnba2}/${p.awards.allnba3}</div>
           <div>最佳新秀：${p.awards.roy ? '是' : '否'}　最佳第六人：${p.awards.sixthman} 次</div>
