@@ -318,7 +318,11 @@ const BAD_STREAK_CUT_LIMIT = 3;
    球队强度不再是写死的 tier，而是由阵容(players_db.js)动态计算；
    球员流动会实时改变球队强弱。薪资档位与工资帽约束自由市场。 */
 
-const SALARY_CAP = 12000; // 单位：万/年，所有球队相同（底薪合同不受帽限制，对齐现实规则）
+const BASE_SALARY_CAP = 12000;    // 单位：万/年，所有球队相同（底薪合同不受帽限制，对齐现实规则）
+const LEGENDS_SALARY_CAP = 18000; // 传奇时代：百位传奇复出，联盟收入暴涨，工资帽同步上调
+function currentCap() {
+  return (typeof state !== 'undefined' && state.settings && state.settings.legendsEnabled) ? LEGENDS_SALARY_CAP : BASE_SALARY_CAP;
+}
 const ROSTER_SIZE = 8;    // 参与强度计算的阵容人数
 
 // 薪资档位按真实NBA结构比例校准（顶薪≈帽的25%，角色球员5-8%，底薪2%）：
@@ -335,8 +339,7 @@ function salaryForOvr(o) {
 
 function dbAvailable() { return typeof window !== 'undefined' && window.NBA_DB && window.NBA_DB.ACTIVE; }
 
-// 开局构建联盟：现役按 DB 分队，不足 ROSTER_SIZE 用凑数替补补齐；
-// 开启历史传奇时把 LEGENDS 随机撒到各队（他们不占工资帽——传奇是白嫖的，这就是"更卷"的代价）
+// 开局构建联盟：现役按 DB 分队，不足 ROSTER_SIZE 用凑数替补补齐
 function buildLeague(legendsEnabled) {
   if (!dbAvailable()) return null;
   const db = window.NBA_DB;
@@ -349,17 +352,36 @@ function buildLeague(legendsEnabled) {
     }
     rosters[t.abbr] = list;
   }
-  if (legendsEnabled) {
-    const legends = shuffle(db.LEGENDS.map(p => ({ ...p, legend: true })));
-    legends.forEach((lg, i) => { rosters[TEAMS[i % TEAMS.length].abbr].push(lg); });
+  const league = { rosters };
+  if (legendsEnabled) distributeLegends(league);
+  return league;
+}
+
+// 传奇按薪资正常占帽：随机找一支"顶掉阵中最弱球员后仍装得下他"的球队加盟；
+// 全联盟都装不下的传奇本生涯不登场（每局登场的传奇阵容都不一样）
+function distributeLegends(league) {
+  if (!dbAvailable()) return;
+  const legends = shuffle(window.NBA_DB.LEGENDS.map(p => ({ ...p, legend: true })));
+  for (const lg of legends) {
+    const order = shuffle(TEAMS);
+    for (const t of order) {
+      const roster = league.rosters[t.abbr];
+      const weakest = [...roster].filter(p => !p.legend).sort((a, b) => a.o - b.o)[0];
+      if (!weakest) continue;
+      const newPayroll = teamPayroll(league, t.abbr) - salaryForOvr(weakest.o) + salaryForOvr(lg.o);
+      if (newPayroll <= currentCap()) {
+        roster.splice(roster.indexOf(weakest), 1);
+        roster.push(lg);
+        break;
+      }
+    }
   }
-  return { rosters };
 }
 
 function teamPayroll(league, abbr) {
-  return league.rosters[abbr].reduce((s, p) => s + (p.legend ? 0 : (p.minSalary ? 100 : salaryForOvr(p.o))), 0);
+  return league.rosters[abbr].reduce((s, p) => s + (p.minSalary ? 100 : salaryForOvr(p.o)), 0);
 }
-function teamCapSpace(league, abbr) { return SALARY_CAP - teamPayroll(league, abbr); }
+function teamCapSpace(league, abbr) { return currentCap() - teamPayroll(league, abbr); }
 
 // 球队强度：前5人权重0.65 + 后3人0.35，再压到与旧 tier 体系兼容的量级(约52~80)
 // 球星名字按能力值分级配色：95+金 / 90+紫 / 85+蓝 / 80+绿 / 其余灰
@@ -387,7 +409,7 @@ function rosterListHtml(abbr) {
   if (!state.league || !state.league.rosters[abbr]) return '<span class="muted small">阵容未知</span>';
   const sorted = [...state.league.rosters[abbr]].sort((a, b) => b.o - a.o);
   return sorted.map(p =>
-    `<div class="small">${p.legend ? '⭐' : ''}${npcNameHtml(p.n, p.o)} <span class="muted">${p.p} · ${p.o}${p.legend ? '' : ` · ${p.minSalary ? 100 : salaryForOvr(p.o)}万`}${p.minSalary ? ' <span class="accent">(请降底薪)</span>' : ''}</span></div>`
+    `<div class="small">${p.legend ? '⭐' : ''}${npcNameHtml(p.n, p.o)} <span class="muted">${p.p} · ${p.o} · ${p.minSalary ? 100 : salaryForOvr(p.o)}万</span>${p.minSalary ? ' <span class="accent">(请降底薪)</span>' : ''}</div>`
   ).join('');
 }
 function rosterDetailsHtml(abbr) {
@@ -818,13 +840,18 @@ function hofTier(score, awards) {
   // 实测：把两个传说级天赋都叠上、C位、30赛季永动机拉满 ——
   // 普通难度封顶大概 600~800，简单难度能冲到 900+。按这个真实分布分三档往上叠，
   // 而不是随便定一个几千分的数字：普通难度的"天花板"封神，简单难度的"天花板"再往上两档
-  if (score >= 900 && marks >= 60) return '已经不是篮球范畴 · 感觉是阿凡达来了';
-  if (score >= 750 && marks >= 50) return '打破次元壁 · 开发者本人都震惊了';
-  if (score >= 600 && marks >= 40) return '封神之作 · 篮球历史因你而改写';
-  if (score >= 450 && marks >= 30) return '毫无争议的历史第一人 · GOAT';
-  if (score >= 300 && marks >= 20) return '历史前三候选 · 联盟统治者（现实中乔丹/詹姆斯的水平）';
-  if (score >= 200 && marks >= 12) return '历史前五候选 · 一个时代的代名词';
-  if (score >= 140 && marks >= 6) return '历史前十候选 · 史诗级传奇';
+  // 历史级档位除了分数和荣誉数量，还必须有"硬通货"背书（MVP+冠军）——
+  // 现实里的历史前十没有一个是无MVP无戒指的；纯靠全明星/单项王堆分数
+  // 只能到"无冕之王"档（巴克利/马龙/尤因的历史位置）
+  const mvp = awards.mvp, rings = awards.champion || 0;
+  if (score >= 900 && marks >= 60 && mvp >= 8 && rings >= 7) return '已经不是篮球范畴 · 感觉是阿凡达来了';
+  if (score >= 750 && marks >= 50 && mvp >= 6 && rings >= 6) return '打破次元壁 · 开发者本人都震惊了';
+  if (score >= 600 && marks >= 40 && mvp >= 5 && rings >= 5) return '封神之作 · 篮球历史因你而改写';
+  if (score >= 450 && marks >= 30 && mvp >= 4 && rings >= 4) return '毫无争议的历史第一人 · GOAT';
+  if (score >= 300 && marks >= 20 && mvp >= 3 && rings >= 3) return '历史前三候选 · 联盟统治者（现实中乔丹/詹姆斯的水平）';
+  if (score >= 200 && marks >= 12 && mvp >= 2 && rings >= 2) return '历史前五候选 · 一个时代的代名词';
+  if (score >= 140 && marks >= 6 && mvp >= 1 && rings >= 1) return '历史前十候选 · 史诗级传奇';
+  if (score >= 140) return '无冕之王 · 数据拉满，戒指没有';
   if (score >= 90) return '准历史级 · 时代之光';
   if (score >= 70) return '名人堂常客 · 历史地位稳固';
   if (score >= 55) return '稳进名人堂 · 不送果篮大步往里闯';
@@ -945,12 +972,16 @@ function setLegends(v) {
   if (state.settings.legendsEnabled === v) return;
   state.settings.legendsEnabled = v;
   if (state.league && dbAvailable()) {
-    if (v) { // 立即把传奇撒进各队
-      const legends = shuffle(window.NBA_DB.LEGENDS.map(p => ({ ...p, legend: true })));
-      legends.forEach((lg, i) => { state.league.rosters[TEAMS[i % TEAMS.length].abbr].push(lg); });
-    } else { // 移除所有传奇
+    if (v) {
+      distributeLegends(state.league); // 带薪资约束地分配传奇
+    } else { // 移除所有传奇，缺人的位置补回凑数替补
+      const db = window.NBA_DB;
       for (const abbr in state.league.rosters) {
         state.league.rosters[abbr] = state.league.rosters[abbr].filter(p => !p.legend);
+        while (state.league.rosters[abbr].length < ROSTER_SIZE) {
+          const fn = db.FILLER_NAMES[randInt(0, db.FILLER_NAMES.length - 1)];
+          state.league.rosters[abbr].push({ n: `${fn}#${randInt(10,99)}`, p: POSITIONS[randInt(0,4)], o: randInt(66,74), filler: true });
+        }
       }
     }
   }
@@ -1411,7 +1442,7 @@ function renderHub() {
         </div>
         <div class="card">
           <div class="small bold muted mb2">我的队友（${escapeHtml(p.team.name)}）</div>
-          <div class="small muted mb2">球队工资：${state.league ? teamPayroll(state.league, p.team.abbr) : '?'}/${SALARY_CAP} 万 · 强度 ${strengthStars(rosterLevelFor(p.team))}</div>
+          <div class="small muted mb2">球队工资：${state.league ? teamPayroll(state.league, p.team.abbr) : '?'}/${currentCap()} 万 · 强度 ${strengthStars(rosterLevelFor(p.team))}</div>
           <div class="scroll-box" style="max-height:300px;">${rosterListHtml(p.team.abbr)}</div>
         </div>
         <div class="card">
