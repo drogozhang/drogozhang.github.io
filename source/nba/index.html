@@ -851,6 +851,7 @@ function hofTier(score, awards) {
   if (score >= 300 && marks >= 20 && mvp >= 3 && rings >= 3) return '历史前三候选 · 联盟统治者（现实中乔丹/詹姆斯的水平）';
   if (score >= 200 && marks >= 12 && mvp >= 2 && rings >= 2) return '历史前五候选 · 一个时代的代名词';
   if (score >= 140 && marks >= 6 && mvp >= 1 && rings >= 1) return '历史前十候选 · 史诗级传奇';
+  if (score >= 140 && rings >= 1) return '最强副手 · 戒指有了，MVP投票没你';
   if (score >= 140) return '无冕之王 · 数据拉满，戒指没有';
   if (score >= 90) return '准历史级 · 时代之光';
   if (score >= 70) return '名人堂常客 · 历史地位稳固';
